@@ -102,9 +102,6 @@ zstyle ':urlglobber' url-other-schema
 unsetopt share_history
 
 
-export WASMTIME_HOME="$HOME/.wasmtime"
-
-export PATH="$WASMTIME_HOME/bin:$PATH"
 # tabtab source for packages
 # uninstall by removing these lines
 [[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true
@@ -112,17 +109,5 @@ export PATH="$WASMTIME_HOME/bin:$PATH"
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/mc mc
 
-# Created by `pipx` on 2022-04-14 07:55:45
-export PATH="$PATH:$HOME/.local/bin"
-
 [ -e ~/dotfiles/common_profile ] && source ~/dotfiles/common_profile
 
-
-# Wasmer
-export WASMER_DIR="$HOME/.wasmer"
-[ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
-. "$HOME/.wasmedge/env"
-
-# BEGIN SNIPPET: Platform.sh CLI configuration
-export PATH="$HOME/"'.platformsh/bin':"$PATH"
-if [ -f "$HOME/"'.platformsh/shell-config.rc' ]; then . "$HOME/"'.platformsh/shell-config.rc'; fi # END SNIPPET
