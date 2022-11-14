@@ -1,0 +1,8 @@
+PYTHONPATH=/Library/Python/Common/site-packages:$PYTHONPATH
+export PYTHONPATH
+alias py='python'
+
+# add Python 
+export PATH="$HOME/Library/Python/3.6/bin:$PATH"
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+

@@ -1,0 +1,4 @@
+# for kdb / q
+export QHOME=~/local/q
+alias q='QHOME=~/local/q rlwrap -r $QHOME/m32/q'
+

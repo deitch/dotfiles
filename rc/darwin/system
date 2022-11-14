@@ -1,0 +1,11 @@
+
+# add homebrew
+export PATH=/opt/homebrew/bin:$PATH
+
+# because of "readlink -f" functionality
+alias readlink=greadlink
+
+# to fix openwith menu
+alias fixopenwith="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -seed -r -f -v -domain local -domain user -domain system"
+
+

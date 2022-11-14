@@ -1,0 +1,20 @@
+os=$(uname -s | tr '[A-Z]' '[a-z]')
+for file in $HOME/dotfiles/rc/*; do
+  filename=$(basename $file)
+  if [ -d "$file" -a "$filename" = "$os" ]; then
+    for subfile in ${file}/*; do
+      source $subfile
+    done
+  fi
+  if [ ! -d "$file" ]; then
+    source $file
+  fi
+done 
+
+if [ -e $HOME/.profile_local ]; then
+   source $HOME/.profile_local
+fi
+
+if [ -e $HOME/.creds ]; then
+   source $HOME/.creds
+fi

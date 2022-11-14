@@ -1,0 +1,5 @@
+#
+# include the Java interpreter
+alias bsh='java bsh.Interpreter'
+alias djava='java -jar /Library/Java/Extensions/DynamicJava-1/djava.jar'
+alias djavagui='java -jar /Library/Java/Extensions/DynamicJava-1/djgui.jar'

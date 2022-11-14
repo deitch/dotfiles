@@ -1,0 +1,44 @@
+# for kubectl krew
+export PATH="$PATH:${KREW_ROOT:-$HOME/.krew}/bin"
+
+# for kubebuilder
+export PATH="$PATH:/usr/local/kubebuilder/bin"
+
+# to remove finalizers for kube
+function kubectl_unfinalize {
+	for i in $@; do
+		kubectl patch $i -p '{"metadata":{"finalizers":[]}}' --type=merge		
+	done
+} 
+
+function kubectl-get-resources() {
+  local kubeconfig="$1"
+  local namespace="$2"
+  local namespaceArg=""
+  local namespaced="false"
+  if [ -z "$namespace" ]; then
+    namespaceArg="-n $namespace"
+    namespaced="true"
+  fi
+  kubectl --kubeconfig $kubeconfig api-resources --verbs=list --namespaced=$namespaced -o=name | xargs -n 1 kubectl --kubeconfig $kubeconfig $namespaceArg  get --ignore-not-found -o custom-columns=KIND:.kind,NAMESPACE:.metadata.namespace,NAME:.metadata.name,DELETIONTIMESTAMP:.metadata.deletionTimestamp
+}
+
+function kubectl-remove-finalizers() {
+  local namespace="$1"
+  local type="$2"
+  local name="$3"
+  local namespaceArg=""
+  if [ -z "$namespace" ]; then
+    namespaceArg="-n $namespace"
+  fi
+  kubectl patch $namespaceArg -p '{"metadata":{"finalizers":null}}' --type=merge $type $name
+}
+
+# kubectl completion
+case "$SHELL" in
+  bash)
+    source <(kubectl completion bash) # setup autocomplete in bash, bash-completion package should be installed first.
+  ;;
+esac
+
+

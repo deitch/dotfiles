@@ -1,0 +1,8 @@
+#
+# shortcut for cherry
+function cherry() {
+  local urlpath=$1
+  # because it cannot handle it with extra /
+  urlpath=${urlpath#/}
+  curl -H "Authorization: Bearer $CHERRY_AUTH_TOKEN" https://api.cherryservers.com/$urlpath
+}

@@ -1,0 +1,9 @@
+function mysqlDropTables() {
+  local host="$1"
+  local port="$2"
+  local user="$3"
+  local pass="$4"
+  local db="$5"
+  local cmd="mysql -h $host -P $port -u $user -p${pass} $db"
+  ${cmd} -BNe "show tables" 2>/dev/null | awk '{print "set foreign_key_checks=0; drop table `" $1 "`;"}'  | ${cmd}
+}

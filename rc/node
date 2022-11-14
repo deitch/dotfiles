@@ -1,0 +1,10 @@
+# ensure that my current $PWD/node_modules/.bin is in the path
+export PATH=./node_modules/.bin:$PATH
+
+# N_PREFIX for n
+export N_PREFIX=~/local
+
+# add npm global
+export PATH=$PATH:~/.npm/bin
+
+

@@ -1,0 +1,2 @@
+# add rust cargo to path
+PATH="$HOME/.cargo/bin:$PATH"

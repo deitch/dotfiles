@@ -1,0 +1,7 @@
+function iniparse {
+    awk -F'=' -v section="$1" -v k="$2"  '
+$0==section{ f=1; next }
+/\[/{ f=0; next }
+f && $1==k{ print $2 }
+'
+}

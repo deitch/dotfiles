@@ -1,0 +1,24 @@
+GOPATH=~/Documents/Development/go
+export GOPATH
+# add go to path
+export PATH=$PATH:$GOPATH/bin
+
+
+function alpinego {
+	# find out where we are
+	PKGNAME=${PWD#${GOPATH}/src/}
+	INPATH=/go/src/${PKGNAME}
+	docker run -it --rm -v $PWD:$INPATH -w $INPATH golang:1.17.5-alpine3.15
+}
+
+function _gosrc {
+	local cur=${COMP_WORDS[COMP_CWORD]}
+	cd $GOPATH/src
+	local IFS=$'\n'
+	COMPREPLY=($(compgen -f -o plusdirs ))
+}
+function gosrc {
+	cd $GOPATH/src/$1
+}
+complete -o filenames -F _gosrc gosrc
+

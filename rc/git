@@ -1,0 +1,14 @@
+# settings for git
+
+# alias for git
+alias g='git'
+
+if [ "$SHELL" = "bash" ]; then
+     if [ -f /usr/local/git/contrib/completion/git-completion.bash ]; then
+       . /usr/local/git/contrib/completion/git-completion.bash
+     fi
+     
+     if [ -f ~/.git-completion.bash ]; then
+       . ~/.git-completion.bash
+     fi
+fi

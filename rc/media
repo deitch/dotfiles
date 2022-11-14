@@ -1,0 +1,6 @@
+# rename pictures in a directory to start with the date and end with the name of the owner
+function date_name_pictures() {
+    local dir="$1"
+    local owner="$2"
+    exiftool '-FileName<CreateDate' -d %Y-%m-%d-%H-%M-%S%%-c-%%f-${owner}.%%e ${dir}
+}

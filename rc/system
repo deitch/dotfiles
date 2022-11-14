@@ -1,0 +1,34 @@
+PATH=/usr/local/bin:/usr/local/sbin:$PATH
+export PATH
+
+#
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+
+# select your default editor
+export EDITOR=vi
+
+# add ~/bin and ~/local/bin to the path
+export PATH=~/bin:~/local/bin:$PATH
+export MANPATH=~/local/share/man:$MANPATH
+
+# to make things simpler
+alias tup="top -o cpu"
+
+alias up="cd .."
+
+
+function changeMac() {
+  local nic="$1"
+  if [ -z "${nic}" ]; then
+    echo "Usage: changeMac <nic>" >&2
+    return
+  fi
+  local mac=$(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//')
+  sudo ifconfig ${nic} ether $mac
+  sudo ifconfig ${nic} down
+  sudo ifconfig ${nic} up
+  echo "Your new physical address for ${nic} is $mac"
+}
+
+alias ssho='ssh -o "StrictHostKeyChecking no"'
+

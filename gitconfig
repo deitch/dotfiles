@@ -1,0 +1,84 @@
+[user]
+	name = Avi Deitcher
+	email = avi@deitcher.net
+[core]
+	excludesfile = ~/.gitignore
+	pager = less -FRSX
+	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+	ignorecase = false
+
+# in case I do a local override anywhere
+[include]
+        path = ~/.gitconfig_local
+
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
+	ui = true
+	pager = true
+[color "status"]
+	added = green
+	changed = yellow
+	untracked = red
+[alias]
+	ci = commit
+	co = checkout
+	st = status
+	lg = log --graph --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
+	dtc = difftool --cached
+	br = branch
+	alias = "!f() { \
+          if [ \"$#\" -ne 2 ]; then { echo >&2 \"Usage: git alias <name> <command>\"; exit 1; } fi; \
+          git config --global alias.\"$1\" \"$2\"; \
+        }; f"
+	stsh = stash --keep-index
+	staash = stash --include-untracked
+	staaash = stash --all
+        cane = commit --amend --no-edit
+
+	standup = !git log \
+          --author=$USER \
+          --since='9am yesterday' \
+          --all \
+          --format=%s
+	which = !git branch | grep -i
+        # my favourite one: if we have an upstream, then pull from upstream and push to origin; if not, just pull from origin
+	up = !(git remote | grep -q upstream && git pull upstream master && git push origin master) || (git remote | grep -q upstream && git pull upstream main && git push origin main) || git pull origin master || git pull origin main
+	taglist = log --tags --simplify-by-decoration --pretty='format:%ai %d'
+
+
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+[credential "https://git-codecommit.us-east-1.amazonaws.com"]
+  helper = !aws --profile verintiss codecommit credential-helper $@
+  UseHttpPath = true
+[credential]
+	helper = osxkeychain
+[push]
+	followTags = true
+[url "ssh://git@github.com/"]
+	insteadOf = github.com
+[init]
+	defaultBranch = main
+
+
+#[commit]
+#        gpgsign = true
+#[tag]
+#        gpgsign = true
+#[gpg]
+#        format = x509
+[gpg "x509"]
+        program = gitsign
+[gitsign]
+        connectorID = https://github.com/login/oauth
