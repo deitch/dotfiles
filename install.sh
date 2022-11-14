@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# where are we executing? We might have cloned into $HOME/dotfiles, or we might not
+BASEDIR=$(dirname $(readlink -f "$0"))
+if [ "$BASEDIR" != "$HOME/dotfiles" ]; then
+  ln -s $BASEDIR $HOME/dotfiles
+fi
 cd $HOME
 
 if [ ! -d "$HOME/dotfiles" ]; then
