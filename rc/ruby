@@ -1,5 +1,5 @@
 # for Ruby
-source /Users/adeitcher/.rvm/scripts/rvm
+[ -f $HOME/.rvm/scripts/rvm ] && source $HOME/.rvm/scripts/rvm
 
 # ruby in debug mode
 alias rubydebug='ruby -r debug'
