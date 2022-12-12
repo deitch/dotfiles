@@ -1,0 +1,3 @@
+# set zsh as my default shell
+chsh -s "$(which zsh)" "$(whoami)"
+
