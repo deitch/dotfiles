@@ -1,3 +1,4 @@
 # set zsh as my default shell
-chsh -s "$(which zsh)" "$(whoami)"
+# THIS DOES NOT WORK - REQUIRES sudo
+#chsh -s "$(which zsh)" "$(whoami)"
 
