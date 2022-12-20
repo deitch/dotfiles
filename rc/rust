@@ -1,2 +1,26 @@
 # add rust cargo to path
 PATH="$HOME/.cargo/bin:$PATH"
+platform=$(uname -s | tr 'A-Z' 'a-z')
+
+export RUSTPATH=""
+
+case "$platform" in
+darwin)
+	RUSTPATH=$HOME/Documents/Development/rust
+	;;
+linux)
+	RUSTPATH=$HOME/rust
+	;;
+esac
+
+# alias
+function _rustsrc {
+        local cur=${COMP_WORDS[COMP_CWORD]}
+        cd $RUSTPATH/src
+        local IFS=$'\n'
+        COMPREPLY=($(compgen -f -o plusdirs ))
+}
+function rustsrc {
+        cd $RUSTPATH/src/$1
+}
+complete -o filenames -F _rustsrc rustsrc
