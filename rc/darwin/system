@@ -8,4 +8,11 @@ alias readlink=greadlink
 # to fix openwith menu
 alias fixopenwith="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -seed -r -f -v -domain local -domain user -domain system"
 
+function qemunvidia {
+	devicejson=$(system_profiler SPUSBDataType  -json | jq '.. | select(type == "object" and .manufacturer == "NVIDIA Corp.")')
+	productid=$(echo $devicejson | jq -r '.product_id')
+	vendorid=$(echo $devicejson | jq -r '.vendor_id' | awk '{print $1}')
+	qemuline="-device usb-host,vendorid=${vendorid},productid=${productid}"
+	echo $qemuline
+}
 
