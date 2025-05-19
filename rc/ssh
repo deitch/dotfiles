@@ -1,0 +1,6 @@
+function sshr {
+    target="$1"
+    ip=${target##*@}
+    ssh-keygen -R "$ip" && ssh "$target"
+}
+

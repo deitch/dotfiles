@@ -1,0 +1,32 @@
+function oxide_instance_clear() {
+    [ -z "$1" ] && {echo "usage: oxide_instance_clear <project>" >&2; return 1}
+    ids=$(oxide instance list --project $1 | jq -r '.[].id')
+    if [ -z "$ids" ]; then
+        echo "no instances" >&2
+        return
+    fi
+    for i in $ids; do
+        oxide instance stop --instance $i
+    done
+    sleep 4 # takes time for them to stop
+    for i in $ids; do
+        oxide instance delete --instance $i
+    done
+}
+
+function oxide_disk_clear() {
+    [ -z "$1" ] && {echo "usage: oxide_disk_clear <project>" >&2; return 1}
+    ids=$(oxide disk list --project $1 | jq -r '.[].id')
+    if [ -z "$ids" ]; then
+        echo "no disks" >&2
+        return
+    fi
+    for i in $ids; do
+        oxide disk delete --disk $i
+    done
+}
+
+function oxide_instance_disk_clear() {
+    oxide_instance_clear $1
+    oxide_disk_clear $1
+}
