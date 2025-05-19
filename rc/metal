@@ -1,4 +1,0 @@
-function metal_device_ip() {
-    metal device get --id "$1" -ojson | jq -r '.ip_addresses[] | select(.public == true and .address_family == 4) | .address'
-}
-

@@ -22,3 +22,5 @@ function gosrc {
 }
 complete -o filenames -F _gosrc gosrc
 
+alias golint=$GOPATH/bin/golangci-lint
+

@@ -45,7 +45,7 @@
           --format=%s
 	which = !git branch | grep -i
         # my favourite one: if we have an upstream, then pull from upstream and push to origin; if not, just pull from origin
-	up = !(git remote | grep -q upstream && git pull upstream master && git push origin master) || (git remote | grep -q upstream && git pull upstream main && git push origin main) || git pull origin master || git pull origin main
+	up = !(git remote | grep -q upstream && git pull upstream master && git push origin master 2>/dev/null) || (git remote | grep -q upstream && git pull upstream main && git push origin main) || git pull origin master || git pull origin main
 	taglist = log --tags --simplify-by-decoration --pretty='format:%ai %d'
 
 
