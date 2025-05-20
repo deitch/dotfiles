@@ -1,14 +1,42 @@
 function oxide_instance_clear() {
+    # ensure we have a project
     [ -z "$1" ] && {echo "usage: oxide_instance_clear <project>" >&2; return 1}
+
+    # get the list of instances
     ids=$(oxide instance list --project $1 | jq -r '.[].id')
     if [ -z "$ids" ]; then
         echo "no instances" >&2
         return
     fi
+
+    # try each instance, see if it needs to be stopped
     for i in $ids; do
-        oxide instance stop --instance $i
+	state=$(oxide instance view --instance $i | jq -r '.run_state')
+	if [ "$state" != "stopped" ]; then
+	        oxide instance stop --instance $i
+	fi
     done
-    sleep 4 # takes time for them to stop
+
+    # wait until all instances are stopped
+    list=$ids
+    for retry in 1..10; do
+        sleep 2 
+        newlist=""
+        for i in $list; do
+            state=$(oxide instance view --instance $i | jq -r '.run_state')
+            if [ "$state" != "stopped" ]; then
+    	        newlist="$newlist $i"
+            fi
+        done
+        list=$newlist
+        if [ -z "$list" ]; then
+            break
+        fi
+    done
+    if [ -n "$list" ]; then
+        echo "could not get stopped states for instances $list" >&2
+        return 1
+    fi
     for i in $ids; do
         oxide instance delete --instance $i
     done
